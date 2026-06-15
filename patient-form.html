@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Patient Intake Form</title>
+<link rel="stylesheet" href="homework1.css">
+</head>
+<body>
+<center>
+<img src="hw1logo.png" alt="Clinic Logo" width="100" />
+<h1>Patient Registration Portal</h1>
+<p>Please fill out all demographic details below.</p>
+</center>
+<form action="thankyou.html" method="get">
+<table border="0" align="center" width="600">
+<tr>
+<td colspan="2" bgcolor="#dcdcdc"><b>1. Account Creation</b></td>
+</tr>
+<tr>
+<td width="200"><label for="userId">Desired User ID:</label></td>
+<td><input type="text" id="userId" name="userId" maxlength="20" required></td>
+</tr>
+<tr>
+<td><label for="password">Create Password:</label></td>
+<td><input type="password" id="password" name="password" required></td>
+</tr>
+<tr>
+<td colspan="2" bgcolor="#dcdcdc"><b>2. Personal Information</b></td>
+</tr>
+<tr>
+<td><label for="firstName">First Name:</label></td>
+<td><input type="text" id="firstName" name="firstName" maxlength="30" required></td>
+</tr>
+<tr>
+<td><label for="lastName">Last Name:</label></td>
+<td><input type="text" id="lastName" name="lastName" required></td>
+</tr>
+<tr>
+<td><label for="dob">Date of Birth:</label></td>
+<td><input type="date" id="dob" name="dob" required></td>
+</tr>
+<tr>
+<td>Gender at Birth:</td>
+<td>
+<input type="radio" id="genderM" name="gender" value="Male" required> <label for="genderM">Male</label>
+<input type="radio" id="genderF" name="gender" value="Female"> <label for="genderF">Female</label>
+</td>
+</tr>
+<tr>
+<td><label for="ethnicity">Ethnicity:</label></td>
+<td>
+<select id="ethnicity" name="ethnicity" required>
+<option value="">-- Choose One --</option>
+<option value="White">White</option>
+<option value="Hispanic">Hispanic or Latino</option>
+<option value="Black">Black or African American</option>
+<option value="Asian">Asian</option>
+<option value="Other">Other</option>
+</select>
+</td>
+</tr>
+<tr>
+<td colspan="2" bgcolor="#dcdcdc"><b>3. Contact Information</b></td>
+</tr>
+<tr>
+<td><label for="street">Street Address:</label></td>
+<td><input type="text" id="street" name="street" required></td>
+</tr>
+<tr>
+<td><label for="city">City:</label></td>
+<td><input type="text" id="city" name="city" required></td>
+</tr>
+<tr>
+<td><label for="state">State Dropdown:</label></td>
+<td>
+<select id="state" name="state" required>
+<option value="">-- Select State --</option>
+<option value="TX">Texas</option>
+<option value="CA">California</option>
+<option value="NY">New York</option>
+</select>
+</td>
+</tr>
+<tr>
+<td><label for="zip">Zip Code:</label></td>
+<td><input type="text" id="zip" name="zip" size="5" maxlength="5" inputmode="numeric" required></td>
+</tr>
+<tr>
+<td><label for="phone">Phone Number:</label></td>
+<td><input type="tel" id="phone" name="phone" placeholder="123-456-7890" required></td>
+</tr>
+<tr>
+<td><label for="email">Email Address:</label></td>
+<td><input type="email" id="email" name="email" required></td>
+</tr>
+<tr>
+<td colspan="2" bgcolor="#dcdcdc"><b>4. Medical Status Survey</b></td>
+</tr>
+<tr>
+<td>Disease Checkboxes:</td>
+<td>
+<input type="checkbox" id="cough" name="symptoms" value="Cough"> <label for="cough">Cough</label><br />
+<input type="checkbox" id="fever" name="symptoms" value="Fever"> <label for="fever">Fever</label><br />
+<input type="checkbox" id="fatigue" name="symptoms" value="Fatigue"> <label for="fatigue">Fatigue</label>
+</td>
+</tr>
+<tr>
+<td><label for="painScale">Health Pain Scale (1 to 10):</label></td>
+<td>
+<input type="range" id="painScale" name="painScale" min="1" max="10" value="1">
+</td>
+</tr>
+<tr>
+<td><label for="reason">Symptom Area Text:</label></td>
+<td>
+<textarea id="reason" name="reason" rows="4" cols="40" placeholder="Type symptoms here..."></textarea>
+</td>
+</tr>
+<tr>
+<td colspan="2" align="center">
+<br />
+<input type="submit" value="Submit Registration">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="reset" value="Clear Form">
+</td>
+</tr>
+</table>
+</form>
+</body>
+</html>
