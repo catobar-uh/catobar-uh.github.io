@@ -1,20 +1,46 @@
+/*
+Program name: homework1.css
+Author: Christopher Tobar
+Date created: June 11, 2026
+Date last edited: June 19, 2026
+Version: 1.0
+Description: Homework 1.
+*/
+
 body {
-font-family: Arial, sans-serif;
-background-color: #f9f9f9;
-color: #333333;
-padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #ededed;
+    color: #000000;
+    padding: 20px;
 }
-h1 {
-color: #003366;
+
+#banner-div {
+    background-color: #ffffff;
+    border: 2px solid #777777;
+    max-width: 616px;
+    margin: 0 auto;
+    padding: 15px;
 }
+
+#banner-div h1 {
+    color: #003366;
+    margin: 5px 0;
+}
+
+#banner-div p {
+    font-weight: bold;
+    color: #444444;
+}
+
 table {
-background-color: #ffffff;
-border: 1px solid #cccccc;
-padding: 15px;
+    border-collapse: collapse;
+    border: 2px solid #777777;
 }
+
 td {
-padding: 6px;
+    font-size: 15px;
 }
+
 input[type="text"], 
 input[type="email"], 
 input[type="tel"], 
@@ -22,20 +48,22 @@ input[type="password"],
 input[type="date"], 
 select, 
 textarea {
-width: 90%;
-padding: 4px;
+    width: 95%;
+    padding: 4px;
 }
+
 input[type="submit"] {
-background-color: #008cba;
-color: white;
-padding: 8px 15px;
-border: none;
-cursor: pointer;
+    background-color: #008cba;
+    color: white;
+    padding: 6px 12px;
+    font-weight: bold;
+    cursor: pointer;
 }
+
 input[type="reset"] {
-background-color: #555555;
-color: white;
-padding: 8px 15px;
-border: none;
-cursor: pointer;
+    background-color: #666666;
+    color: white;
+    padding: 6px 12px;
+    font-weight: bold;
+    cursor: pointer;
 }
