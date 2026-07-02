@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<!--
+Program name: homework2.html
+Author: Christopher Tobar
+Date created: July 1, 2026
+Date last edited: July 1, 2026
+Version: 2.0
+Description: Homework 2 enhanced patient registration form with HTML validation, JavaScript validation, dynamic slider display, and review output.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metropolitan Medical Clinic - Homework 2 Patient Registration</title>
+    <link rel="stylesheet" href="homework2.css">
+    <script src="homework2.js" defer></script>
+</head>
+<body>
+    <div id="banner-div">
+        <img src="hw2logo.png" alt="Metropolitan Medical Clinic Logo" id="clinic-logo">
+        <div>
+            <h1>Metropolitan Medical Clinic</h1>
+            <p>Today is: <span id="currentDate"></span></p>
+        </div>
+    </div>
+
+    <main id="main-content">
+        <section id="form-section">
+            <h2>Patient Registration Form - Homework 2</h2>
+            <p class="instructions">Complete the form below. Use the Review button to check your information before submitting.</p>
+
+            <form id="patientForm" action="thankyou.html" onsubmit="return validateForm();">
+                <table class="form-table">
+                    <tr><th colspan="3">1. Patient Portal Account Setup</th></tr>
+                    <tr>
+                        <td><label for="userId">Desired User ID:</label></td>
+                        <td><input type="text" id="userId" name="userId" maxlength="30" required pattern="^[A-Za-z][A-Za-z0-9_-]{4,29}$" title="5 to 30 characters. Start with a letter. Use only letters, numbers, underscore, or dash. No spaces." onblur="lowercaseUserId();"></td>
+                        <td><span class="error" id="userIdError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="patientId">Patient ID / SSN:</label></td>
+                        <td><input type="password" id="patientId" name="patientId" maxlength="11" required pattern="^\*{3}-\*{2}-\d{4}$|^\d{9}$|^\d{3}-\d{2}-\d{4}$" title="Enter an obscured or test ID. Example: ***-**-1234. Do not use a real SSN."></td>
+                        <td><span class="error" id="patientIdError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Create Password:</label></td>
+                        <td><input type="password" id="password" name="password" minlength="8" maxlength="30" required title="8 to 30 characters with uppercase, lowercase, number, and special character. No quotes." onkeyup="checkPasswordLive();"></td>
+                        <td><span class="error" id="passwordError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="passwordConfirm">Re-enter Password:</label></td>
+                        <td><input type="password" id="passwordConfirm" name="passwordConfirm" minlength="8" maxlength="30" required title="Re-enter the same password." onkeyup="checkPasswordLive();"></td>
+                        <td><span class="error" id="passwordConfirmError"></span></td>
+                    </tr>
+
+                    <tr><th colspan="3">2. Personal Demographics</th></tr>
+                    <tr>
+                        <td><label for="firstName">First Name:</label></td>
+                        <td><input type="text" id="firstName" name="firstName" maxlength="30" required pattern="^[A-Za-z'-]{1,30}$" title="1 to 30 characters. Letters, apostrophes, and dashes only."></td>
+                        <td><span class="error" id="firstNameError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="middleInitial">Middle Initial:</label></td>
+                        <td><input type="text" id="middleInitial" name="middleInitial" maxlength="1" pattern="^[A-Za-z]?$" title="Optional. One letter only."></td>
+                        <td><span class="error" id="middleInitialError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="lastName">Last Name:</label></td>
+                        <td><input type="text" id="lastName" name="lastName" maxlength="30" required pattern="^[A-Za-z0-9'-]{1,30}$" title="1 to 30 characters. Letters, apostrophes, dashes, and suffix numbers only."></td>
+                        <td><span class="error" id="lastNameError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="dob">Date of Birth:</label></td>
+                        <td><input type="date" id="dob" name="dob" required title="Enter date of birth. It cannot be in the future or more than 120 years ago."></td>
+                        <td><span class="error" id="dobError"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Gender at Birth:</td>
+                        <td>
+                            <label><input type="radio" name="gender" value="Male" required title="Select gender at birth."> Male</label>
+                            <label><input type="radio" name="gender" value="Female" title="Select gender at birth."> Female</label>
+                            <label><input type="radio" name="gender" value="Other" title="Select gender at birth."> Other</label>
+                        </td>
+                        <td><span class="error" id="genderError"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Insurance:</td>
+                        <td>
+                            <label><input type="radio" name="insurance" value="Yes" required title="Select whether you currently have insurance."> Yes</label>
+                            <label><input type="radio" name="insurance" value="No" title="Select whether you currently have insurance."> No</label>
+                            <label><input type="radio" name="insurance" value="Unsure" title="Select whether you currently have insurance."> Unsure</label>
+                        </td>
+                        <td><span class="error" id="insuranceError"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Vaccinated?</td>
+                        <td>
+                            <label><input type="radio" name="vaccinated" value="Yes" required title="Select vaccination status."> Yes</label>
+                            <label><input type="radio" name="vaccinated" value="No" title="Select vaccination status."> No</label>
+                            <label><input type="radio" name="vaccinated" value="Unsure" title="Select vaccination status."> Unsure</label>
+                        </td>
+                        <td><span class="error" id="vaccinatedError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="ethnicity">Race / Ethnicity:</label></td>
+                        <td>
+                            <select id="ethnicity" name="ethnicity" required title="Choose the race or ethnicity option that best applies.">
+                                <option value="">-- Choose One --</option>
+                                <option>White</option>
+                                <option>Hispanic or Latino</option>
+                                <option>Black or African American</option>
+                                <option>Asian</option>
+                                <option>Other</option>
+                                <option>Prefer not to answer</option>
+                            </select>
+                        </td>
+                        <td><span class="error" id="ethnicityError"></span></td>
+                    </tr>
+
+                    <tr><th colspan="3">3. Contact Details</th></tr>
+                    <tr>
+                        <td><label for="address1">Address Line 1:</label></td>
+                        <td><input type="text" id="address1" name="address1" minlength="2" maxlength="30" required title="Required. 2 to 30 characters."></td>
+                        <td><span class="error" id="address1Error"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="address2">Address Line 2:</label></td>
+                        <td><input type="text" id="address2" name="address2" minlength="2" maxlength="30" title="Optional. If entered, use 2 to 30 characters."></td>
+                        <td><span class="error" id="address2Error"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="city">City:</label></td>
+                        <td><input type="text" id="city" name="city" minlength="2" maxlength="30" required pattern="^[A-Za-z .'-]{2,30}$" title="Required. 2 to 30 characters. Letters, spaces, periods, apostrophes, and dashes allowed."></td>
+                        <td><span class="error" id="cityError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="state">State:</label></td>
+                        <td>
+                            <select id="state" name="state" required title="Select a valid two-letter state, DC, or PR code."></select>
+                        </td>
+                        <td><span class="error" id="stateError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="zip">Zip Code:</label></td>
+                        <td><input type="text" id="zip" name="zip" required pattern="^\d{5}(-\d{4})?$" maxlength="10" title="Enter 5-digit ZIP or ZIP+4 format, such as 77002 or 77002-1234." onblur="displayZipTruncated();"></td>
+                        <td><span class="error" id="zipError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="phone">Phone Number:</label></td>
+                        <td><input type="tel" id="phone" name="phone" required pattern="^\d{3}-\d{3}-\d{4}$" placeholder="713-555-1234" title="Enter phone number in 000-000-0000 format."></td>
+                        <td><span class="error" id="phoneError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email Address:</label></td>
+                        <td><input type="email" id="email" name="email" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Enter a valid email address in name@domain.tld format."></td>
+                        <td><span class="error" id="emailError"></span></td>
+                    </tr>
+
+                    <tr><th colspan="3">4. Medical Status Survey</th></tr>
+                    <tr>
+                        <td>Current Symptoms:</td>
+                        <td>
+                            <label><input type="checkbox" name="symptoms" value="Cough" title="Check if you currently have cough."> Cough</label>
+                            <label><input type="checkbox" name="symptoms" value="Fever" title="Check if you currently have fever."> Fever</label>
+                            <label><input type="checkbox" name="symptoms" value="Fatigue" title="Check if you currently have fatigue."> Fatigue</label>
+                            <label><input type="checkbox" name="symptoms" value="Headache" title="Check if you currently have headache."> Headache</label>
+                            <label><input type="checkbox" name="symptoms" value="Sore throat" title="Check if you currently have sore throat."> Sore throat</label>
+                        </td>
+                        <td><span class="error" id="symptomsError"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Medical History:</td>
+                        <td>
+                            <label><input type="checkbox" name="history" value="Chicken Pox" title="Check if you have had Chicken Pox."> Chicken Pox</label>
+                            <label><input type="checkbox" name="history" value="Measles" title="Check if you have had Measles."> Measles</label>
+                            <label><input type="checkbox" name="history" value="Mumps" title="Check if you have had Mumps."> Mumps</label>
+                            <label><input type="checkbox" name="history" value="Diabetic" title="Check if you are diabetic."> Diabetic</label>
+                            <label><input type="checkbox" name="history" value="Heart Disease" title="Check if you have heart disease."> Heart Disease</label>
+                            <label><input type="checkbox" name="history" value="Covid-19" title="Check if you have had Covid-19."> Covid-19</label>
+                        </td>
+                        <td><span class="error" id="historyError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="painScale">Pain Scale:</label></td>
+                        <td>
+                            <input type="range" id="painScale" name="painScale" min="1" max="10" value="5" title="Move slider from 1 for low pain to 10 for severe pain." oninput="updatePainValue();">
+                            <span id="painValue">5</span> / 10
+                        </td>
+                        <td><span class="error" id="painScaleError"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="reasonVisit">Reason for Visit:</label></td>
+                        <td><textarea id="reasonVisit" name="reasonVisit" rows="4" cols="50" title="Optional. Describe symptoms or reason for visit. Do not enter HTML tags or double quotes." onblur="cleanTextarea();"></textarea></td>
+                        <td><span class="error" id="reasonVisitError"></span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="button-row">
+                            <button type="button" onclick="reviewForm();" title="Review all information entered before submitting.">Review</button>
+                            <input type="submit" value="Submit" title="Submit the form after validation.">
+                            <input type="reset" value="CLEAR AND START OVER" onclick="resetReview();" title="Clear all form entries and start over.">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </section>
+
+        <section id="review-section">
+            <h2>PLEASE REVIEW THIS INFORMATION</h2>
+            <div id="reviewOutput">Click the Review button after entering patient information.</div>
+        </section>
+    </main>
+
+    <div id="footer-div">
+        <p><strong>Metropolitan Medical Clinic</strong> | PO Box 18881 | Sugar Land, TX 77496</p>
+        <button type="button" onclick="alert('Contact us at support@metropolitanmedical.example or 713-555-0100');">Contact Us</button>
+        <p><a href="https://www.facebook.com" target="_blank">Facebook</a> | <a href="https://www.x.com" target="_blank">X / Twitter</a></p>
+    </div>
+
+    <!-- End of homework2.html -->
+</body>
+</html>

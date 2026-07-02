@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--
+Program name: thankyou.html
+Author: Christopher Tobar
+Date created: July 1, 2026
+Date last edited: July 1, 2026
+Version: 2.0
+Description: Thank you page for Homework 2 patient registration form.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - Metropolitan Medical Clinic</title>
+    <link rel="stylesheet" href="homework2.css">
+    <script>
+        window.onload = function () {
+            document.getElementById('currentDate').textContent = new Date().toLocaleDateString('en-US', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+        };
+    </script>
+</head>
+<body>
+    <div id="banner-div">
+        <img src="hw2logo.png" alt="Metropolitan Medical Clinic Logo" id="clinic-logo">
+        <div>
+            <h1>Metropolitan Medical Clinic</h1>
+            <p>Today is: <span id="currentDate"></span></p>
+        </div>
+    </div>
+
+    <main id="main-content">
+        <section id="form-section">
+            <h2>Form Submitted Successfully!</h2>
+            <p>Thank you for submitting your new patient intake paperwork.</p>
+            <p>Our clinic's administrative staff will process your profile shortly.</p>
+            <p><a href="homework2.html">Back to Homework 2 Form</a></p>
+        </section>
+    </main>
+
+    <div id="footer-div">
+        <p><strong>Metropolitan Medical Clinic</strong> | PO Box 18881 | Sugar Land, TX 77496</p>
+    </div>
+
+    <!-- End of thankyou.html -->
+</body>
+</html>

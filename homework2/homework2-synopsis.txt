@@ -1,0 +1,13 @@
+Homework 2 Synopsis
+Christopher Tobar
+MIS 3371
+
+My Homework 2 website is an enhanced patient registration form for Metropolitan Medical Clinic. It builds on my Homework 1 patient form by keeping the same medical-clinic theme while adding stronger validation, an external JavaScript file, title attributes for context-sensitive field instructions, and a Review button.
+
+The form collects patient portal login information, patient ID, demographics, address, contact details, medical symptoms, medical history, insurance status, vaccination status, pain scale, and a reason for visit. The Review button displays the entered information in a separate section on the same page without rewriting the original form. The review section also hides the password and patient ID for privacy.
+
+I am particularly happy that the Review button works on the same page, the pain-scale slider updates dynamically as the user moves it, the User ID is converted to lowercase, the ZIP+4 value is displayed as a truncated 5-digit ZIP in the review, and the password validation checks for length, uppercase, lowercase, number, special character, no quotes, no username/name, and matching password confirmation.
+
+The page uses HTML5 pattern matching for names, phone number, ZIP code, email, User ID, and other fields. JavaScript is used for items that HTML alone cannot fully handle, including dynamic date display, date-of-birth range checks, password checks, slider updates, state dropdown generation, and review output.
+
+At this time, the page is client-side only and does not save data into a database. The form submits to a local thank-you page after validation, which matches the current assignment requirement.

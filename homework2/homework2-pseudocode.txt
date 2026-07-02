@@ -1,0 +1,120 @@
+Homework 2 Pseudocode
+Christopher Tobar
+MIS 3371
+
+START
+
+Load homework2.html
+Load external stylesheet homework2.css
+Load external JavaScript file homework2.js
+
+WHEN page loads
+    Display today's date in the banner
+    Calculate minimum birth date as today's date minus 120 years
+    Set date-of-birth minimum and maximum values
+    Populate the state dropdown with all 50 states, DC, and PR
+    Display default pain-scale value
+END WHEN
+
+User enters patient portal information
+    User enters desired User ID
+    User enters patient ID / SSN style field using password input
+    User enters password
+    User re-enters password
+END
+
+User enters demographic information
+    User enters first name
+    User optionally enters middle initial
+    User enters last name
+    User enters date of birth
+    User selects gender
+    User selects insurance status
+    User selects vaccination status
+    User selects race / ethnicity
+END
+
+User enters contact information
+    User enters address line 1
+    User optionally enters address line 2
+    User enters city
+    User selects state
+    User enters ZIP code
+    User enters phone number
+    User enters email address
+END
+
+User enters medical survey information
+    User selects current symptoms checkboxes
+    User selects medical history checkboxes
+    User moves pain-scale slider
+        Display the updated value beside the slider immediately
+    User optionally enters reason for visit
+END
+
+WHEN User ID field loses focus
+    Convert User ID to lowercase
+END WHEN
+
+WHEN ZIP field loses focus
+    IF ZIP+4 format was entered THEN
+        Show note that the review will display the first 5 digits
+    END IF
+END WHEN
+
+WHEN reason-for-visit field loses focus
+    Remove double quotes and angle brackets to reduce bad input
+END WHEN
+
+WHEN password fields change
+    Check password length is 8 to 30 characters
+    Check password contains uppercase letter
+    Check password contains lowercase letter
+    Check password contains number
+    Check password contains special character
+    Check password does not contain quotes
+    Check password does not contain User ID
+    Check password does not contain first name or last name
+    Check password and confirmation password match
+    Display error message if any rule fails
+END WHEN
+
+WHEN Review button is clicked
+    Convert User ID to lowercase
+    Clean reason-for-visit textarea
+    Validate HTML5 pattern rules
+    Validate date of birth is not future and not older than 120 years
+    Validate password rules
+    Gather all radio button values
+    Gather all checkbox values
+    Gather all text, date, email, phone, select, textarea, and slider values
+    Hide password and patient ID in review output
+    IF ZIP+4 was entered THEN
+        Display only first 5 ZIP digits in review
+    END IF
+    Display all entered information in the review section on the same page
+END WHEN
+
+WHEN Submit button is clicked
+    Run all HTML5 validations
+    Run date-of-birth validation
+    Run password validation
+    Compare password and re-entered password
+    IF any validation fails THEN
+        Prevent form submission
+        Display errors near the related fields
+        Show alert telling user to correct errors
+        Display review section with current information
+    ELSE
+        Submit form to thankyou.html
+    END IF
+END WHEN
+
+WHEN Clear and Start Over button is clicked
+    Clear all form fields
+    Clear all error messages
+    Reset review output message
+    Reset pain-scale display
+END WHEN
+
+END
