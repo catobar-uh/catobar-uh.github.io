@@ -1,0 +1,16 @@
+MIS 3371 - Homework 3 and Homework 4 Combined Submission
+Author: Christopher Tobar
+
+Metropolitan Medical Clinic Patient Registration Portal
+
+https://catobar-uh.github.io/homework4/homework4.html
+
+https://catobar-uh.github.io/homework4/homework4.html
+
+
+Synopsis:
+This website is an enhanced & upgraded UI patient registration portal that builds directly on my previous Homework 1 and Homework 2 work. The form collects patient account, demographic, contact, and medical information. For the Homework 3 requirements, I added JavaScript validation that runs while the user is typing or when the user leaves a field. Error messages remain beside the affected fields until the information is corrected. The Validate Form button runs all JavaScript validation functions again and the Submit button remains hidden until the complete form passes validation. The Review/Get Data button also displays the info entered without displaying sensitive password or patient ID values.
+
+For Homework 4, I added a Fetch API call with try/catch that loads the state dropdown options from an external file. I also added a separate patient resources page displayed through an iframe, a sticky header and fixed footer, a 48 hour first-name cookie, a Remember Me checkbox, and localStorage for non-sensitive form information. Returning users receive a personalized welcome message and their non-sensitive information is restored. They can select the “Not [Name]” option to clear the cookie, clear localStorage, and begin as a new user.
+
+Im happy with how the Homework 3 and Homework 4 functionality works together within one form and the live validation, conditional Submit button, returning-user experience, and Fetch API state list. The one downside is that this remains a client-side classroom demon and does not submit patient information to a secure server or medical database :)
