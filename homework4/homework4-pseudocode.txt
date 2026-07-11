@@ -1,0 +1,116 @@
+MIS 3371 - Homework 3 and Homework 4 Combined Pseudocode
+Author: Christopher Tobar
+
+START PAGE
+    Display clinic banner, dynamic date, form, review panel, iframe, and fixed footer
+    Calculate minimum and maximum allowed birth dates
+    Use FETCH with TRY/CATCH to read state-options.html
+        IF fetch succeeds
+            Insert returned option elements into State select box
+            Display successful Fetch API status
+        ELSE
+            Display Fetch API error message
+    Check for first-name cookie
+        IF cookie exists
+            Display "Welcome back, [First Name]"
+            Prefill first name
+            Show "Not [First Name]? Start as a NEW USER" checkbox
+            Read non-sensitive saved form data from localStorage
+            Restore saved data to matching form fields
+        ELSE
+            Display "Welcome, new user"
+
+ON USER INPUT OR FIELD EXIT
+    Normalize field when appropriate
+        User ID -> lowercase
+        Email -> lowercase
+        Middle initial -> uppercase
+        Patient ID -> digits only, maximum 9
+        ZIP -> digits only, maximum 5
+        Phone -> format as 000-000-0000
+        Textarea -> remove angle brackets and double quotes
+    Call the JavaScript validation function for that field
+    IF data is invalid
+        Display an error message beside the field
+        Keep the error visible
+        Hide the final Submit button
+    ELSE
+        Remove the field error message
+    IF Remember Me is checked AND field is not sensitive
+        Save current non-sensitive form data to localStorage
+
+PASSWORD VALIDATION
+    Require 8 to 30 characters
+    Require at least one uppercase letter
+    Require at least one lowercase letter
+    Require at least one digit
+    Require at least one special character
+    Do not allow quotes
+    Do not allow password to contain User ID
+    Do not allow password to contain first or last name
+    Compare password and confirmation password
+    Display errors immediately as the user types
+
+VALIDATE FORM BUTTON
+    SET formIsValid = TRUE
+    FOR every text, select, date, password, email, phone, ZIP, and textarea field
+        Normalize field value
+        Call the specific JavaScript validation function
+        IF validation fails
+            SET formIsValid = FALSE
+    FOR required radio button groups
+        Verify exactly one option is selected
+        IF no option is selected
+            Display error
+            SET formIsValid = FALSE
+    IF formIsValid is TRUE
+        Show final Submit button
+        Change Validate button text to show success
+        Generate Review output
+        IF Remember Me is checked
+            Save first name in cookie with 48-hour expiration
+            Save non-sensitive form fields in localStorage
+        Display message that form is ready to submit
+    ELSE
+        Hide final Submit button
+        Keep all error messages visible
+        Generate Review output for troubleshooting
+        Scroll toward the first visible error
+        Tell user to correct errors
+
+REVIEW / GET DATA BUTTON
+    Read all current form values
+    Read selected radio buttons and checkboxes
+    Mask the 9-digit Patient ID
+    Never display the password
+    Create a review table in the review area
+
+REMEMBER ME LOGIC
+    IF Remember Me is checked
+        Save first name in 48-hour cookie
+        Save all non-sensitive fields in localStorage
+        Never save patient ID or password fields
+    ELSE
+        Expire first-name cookie
+        Delete localStorage record
+
+START AS NEW USER
+    IF returning user checks "Not [Name]?"
+        Expire first-name cookie
+        Delete localStorage record
+        Reset form
+        Clear validation messages
+        Hide final Submit button
+        Change heading to "Welcome, new user"
+
+SUBMIT BUTTON
+    Only visible after Validate Form reports zero errors
+    Run full validation one more time
+    IF any error exists
+        Prevent submission
+        Hide Submit button
+    ELSE
+        Save remembered non-sensitive data only when requested
+        Load thankyou.html
+
+END

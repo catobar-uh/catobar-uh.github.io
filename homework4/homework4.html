@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<!--
+Program name: homework4.html
+Author: Christopher Tobar
+Date created: July 9, 2026
+Date last edited: July 11, 2026
+Version: 4.0
+Description: Combined Homework 3 and 4 patient registration form. Builds on Homework 2 with on-the-fly JavaScript validation, Fetch API, iframe content, sticky content protection, cookies, and localStorage.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metropolitan Medical Clinic - Homework 4 Patient Registration</title>
+    <link rel="stylesheet" href="homework4.css">
+    <script src="homework4.js" defer></script>
+</head>
+<body>
+    <!-- Sticky/protected heading remains visible while the user scrolls. -->
+    <header id="banner-div" class="sticky-header">
+        <img src="hw2logo.png" alt="Metropolitan Medical Clinic Logo" id="clinic-logo">
+        <div class="banner-copy">
+            <h1>Metropolitan Medical Clinic</h1>
+            <p id="welcomeMessage">Welcome, new user.</p>
+            <p>Today is: <span id="currentDate"></span></p>
+            <label id="newUserControl" class="new-user-control" hidden>
+                <input type="checkbox" id="startNewUser">
+                <span id="newUserText">Not this user? Click here to start as a new user.</span>
+            </label>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <section id="form-section">
+            <h2>Patient Registration Form - Homework 3 &amp; 4 Combined</h2>
+            <p class="instructions">Fields are checked with JavaScript as you type or leave each field. Correct any visible errors, then click <strong>Validate Form</strong>. The final Submit button appears only when all required data is valid.</p>
+            <p id="fetchStatus" class="status-message" aria-live="polite">Loading state options with Fetch API...</p>
+
+            <form id="patientForm" action="thankyou.html" novalidate>
+                <table class="form-table">
+                    <tr><th colspan="3">1. Patient Portal Account Setup</th></tr>
+                    <tr>
+                        <td><label for="userId">Desired User ID:</label></td>
+                        <td><input type="text" id="userId" name="userId" maxlength="20" required pattern="^[A-Za-z][A-Za-z0-9_-]{4,19}$" title="5 to 20 characters. Start with a letter. Use letters, numbers, underscore, or dash only. No spaces."></td>
+                        <td><span class="field-message" id="userIdError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="patientId">9-Digit Patient ID:</label></td>
+                        <td><input type="password" id="patientId" name="patientId" inputmode="numeric" maxlength="9" required pattern="^\d{9}$" title="Enter exactly 9 digits. The value is obscured and is never saved to localStorage."></td>
+                        <td><span class="field-message" id="patientIdError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="password">Create Password:</label></td>
+                        <td><input type="password" id="password" name="password" minlength="8" maxlength="30" required title="8 to 30 characters with uppercase, lowercase, number, and special character. It cannot contain your name or User ID and cannot contain quotes."></td>
+                        <td><span class="field-message" id="passwordError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="passwordConfirm">Re-enter Password:</label></td>
+                        <td><input type="password" id="passwordConfirm" name="passwordConfirm" minlength="8" maxlength="30" required title="Re-enter exactly the same password."></td>
+                        <td><span class="field-message" id="passwordConfirmError" aria-live="polite"></span></td>
+                    </tr>
+
+                    <tr><th colspan="3">2. Personal Demographics</th></tr>
+                    <tr>
+                        <td><label for="firstName">First Name:</label></td>
+                        <td><input type="text" id="firstName" name="firstName" maxlength="30" required pattern="^[A-Za-z'-]{1,30}$" title="1 to 30 characters. Letters, apostrophes, and dashes only."></td>
+                        <td><span class="field-message" id="firstNameError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="middleInitial">Middle Initial:</label></td>
+                        <td><input type="text" id="middleInitial" name="middleInitial" maxlength="1" pattern="^[A-Za-z]?$" title="Optional. One letter only."></td>
+                        <td><span class="field-message" id="middleInitialError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="lastName">Last Name:</label></td>
+                        <td><input type="text" id="lastName" name="lastName" maxlength="30" required pattern="^[A-Za-z'-]{1,30}$" title="1 to 30 characters. Letters, apostrophes, and dashes only."></td>
+                        <td><span class="field-message" id="lastNameError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="dob">Date of Birth:</label></td>
+                        <td><input type="date" id="dob" name="dob" required title="Enter a date that is not in the future and not more than 120 years ago."></td>
+                        <td><span class="field-message" id="dobError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Gender at Birth:</td>
+                        <td class="choice-group" data-required-group="gender">
+                            <label><input type="radio" name="gender" value="Male" title="Select gender at birth."> Male</label>
+                            <label><input type="radio" name="gender" value="Female" title="Select gender at birth."> Female</label>
+                            <label><input type="radio" name="gender" value="Other" title="Select gender at birth."> Other</label>
+                        </td>
+                        <td><span class="field-message" id="genderError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Insurance:</td>
+                        <td class="choice-group" data-required-group="insurance">
+                            <label><input type="radio" name="insurance" value="Yes" title="Select whether you currently have insurance."> Yes</label>
+                            <label><input type="radio" name="insurance" value="No" title="Select whether you currently have insurance."> No</label>
+                            <label><input type="radio" name="insurance" value="Unsure" title="Select whether you currently have insurance."> Unsure</label>
+                        </td>
+                        <td><span class="field-message" id="insuranceError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Vaccinated?</td>
+                        <td class="choice-group" data-required-group="vaccinated">
+                            <label><input type="radio" name="vaccinated" value="Yes" title="Select vaccination status."> Yes</label>
+                            <label><input type="radio" name="vaccinated" value="No" title="Select vaccination status."> No</label>
+                            <label><input type="radio" name="vaccinated" value="Unsure" title="Select vaccination status."> Unsure</label>
+                        </td>
+                        <td><span class="field-message" id="vaccinatedError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="ethnicity">Race / Ethnicity:</label></td>
+                        <td>
+                            <select id="ethnicity" name="ethnicity" required title="Choose the race or ethnicity option that best applies.">
+                                <option value="">-- Choose One --</option>
+                                <option>White</option>
+                                <option>Hispanic or Latino</option>
+                                <option>Black or African American</option>
+                                <option>Asian</option>
+                                <option>Other</option>
+                                <option>Prefer not to answer</option>
+                            </select>
+                        </td>
+                        <td><span class="field-message" id="ethnicityError" aria-live="polite"></span></td>
+                    </tr>
+
+                    <tr><th colspan="3">3. Contact Details</th></tr>
+                    <tr>
+                        <td><label for="address1">Address Line 1:</label></td>
+                        <td><input type="text" id="address1" name="address1" minlength="2" maxlength="30" required title="Required. Enter 2 to 30 characters."></td>
+                        <td><span class="field-message" id="address1Error" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="address2">Address Line 2:</label></td>
+                        <td><input type="text" id="address2" name="address2" minlength="2" maxlength="30" title="Optional. If entered, use 2 to 30 characters."></td>
+                        <td><span class="field-message" id="address2Error" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="city">City:</label></td>
+                        <td><input type="text" id="city" name="city" minlength="2" maxlength="30" required pattern="^[A-Za-z .'-]{2,30}$" title="Required. 2 to 30 characters. Letters, spaces, periods, apostrophes, and dashes allowed."></td>
+                        <td><span class="field-message" id="cityError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="state">State:</label></td>
+                        <td><select id="state" name="state" required title="State options are loaded from an external file using the Fetch API."><option value="">-- Loading states --</option></select></td>
+                        <td><span class="field-message" id="stateError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="zip">Zip Code:</label></td>
+                        <td><input type="text" id="zip" name="zip" required pattern="^\d{5}$" maxlength="5" inputmode="numeric" title="Enter exactly 5 digits."></td>
+                        <td><span class="field-message" id="zipError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="phone">Phone Number:</label></td>
+                        <td><input type="tel" id="phone" name="phone" required pattern="^\d{3}-\d{3}-\d{4}$" placeholder="713-555-1234" title="Enter phone number in 000-000-0000 format."></td>
+                        <td><span class="field-message" id="phoneError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="email">Email Address:</label></td>
+                        <td><input type="email" id="email" name="email" required pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Enter a valid email address in name@domain.tld format. Email is converted to lowercase."></td>
+                        <td><span class="field-message" id="emailError" aria-live="polite"></span></td>
+                    </tr>
+
+                    <tr><th colspan="3">4. Medical Information</th></tr>
+                    <tr>
+                        <td>Current Symptoms:</td>
+                        <td class="choice-group">
+                            <label><input type="checkbox" name="symptoms" value="Cough" title="Check if you currently have cough."> Cough</label>
+                            <label><input type="checkbox" name="symptoms" value="Fever" title="Check if you currently have fever."> Fever</label>
+                            <label><input type="checkbox" name="symptoms" value="Fatigue" title="Check if you currently have fatigue."> Fatigue</label>
+                            <label><input type="checkbox" name="symptoms" value="Headache" title="Check if you currently have headache."> Headache</label>
+                            <label><input type="checkbox" name="symptoms" value="Sore throat" title="Check if you currently have sore throat."> Sore throat</label>
+                        </td>
+                        <td><span class="field-message" id="symptomsError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td>Medical History:</td>
+                        <td class="choice-group">
+                            <label><input type="checkbox" name="history" value="Chicken Pox" title="Check if you have had Chicken Pox."> Chicken Pox</label>
+                            <label><input type="checkbox" name="history" value="Measles" title="Check if you have had Measles."> Measles</label>
+                            <label><input type="checkbox" name="history" value="Mumps" title="Check if you have had Mumps."> Mumps</label>
+                            <label><input type="checkbox" name="history" value="Diabetic" title="Check if you are diabetic."> Diabetic</label>
+                            <label><input type="checkbox" name="history" value="Heart Disease" title="Check if you have heart disease."> Heart Disease</label>
+                            <label><input type="checkbox" name="history" value="Covid-19" title="Check if you have had Covid-19."> Covid-19</label>
+                        </td>
+                        <td><span class="field-message" id="historyError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="painScale">Current Pain Level:</label></td>
+                        <td>
+                            <input type="range" id="painScale" name="painScale" min="1" max="10" value="5" title="Move the slider from 1 for low pain to 10 for severe pain.">
+                            <strong><span id="painValue">5</span> / 10</strong>
+                        </td>
+                        <td><span class="field-message" id="painScaleError" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td><label for="reasonVisit">Reason for Visit:</label></td>
+                        <td><textarea id="reasonVisit" name="reasonVisit" rows="4" cols="50" title="Optional. Describe symptoms or reason for visit. HTML angle brackets and double quotes are removed for safety."></textarea></td>
+                        <td><span class="field-message" id="reasonVisitError" aria-live="polite"></span></td>
+                    </tr>
+
+                    <tr><th colspan="3">5. Remember This User</th></tr>
+                    <tr>
+                        <td><label for="rememberMe">Remember Me:</label></td>
+                        <td>
+                            <label><input type="checkbox" id="rememberMe" name="rememberMe" checked title="Keep this checked to remember your first name in a 48-hour cookie and save non-sensitive form entries in localStorage."> Remember my non-sensitive information on this browser.</label>
+                        </td>
+                        <td><span class="field-message" id="rememberMeMessage" aria-live="polite"></span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="button-row">
+                            <button type="button" id="reviewButton" title="Display all current form information in the review panel.">Review / Get Data</button>
+                            <button type="button" id="validateButton" title="Run every JavaScript validation function. A Submit button appears only if there are no errors.">Validate Form</button>
+                            <button type="submit" id="submitButton" class="submit-button" title="Submit the form after successful validation." hidden>Submit</button>
+                            <button type="reset" id="resetButton" class="reset-button" title="Clear the form and current validation messages.">Clear and Start Over</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </section>
+
+        <aside id="review-section">
+            <h2>Please Review This Information</h2>
+            <div id="reviewOutput">Click <strong>Review / Get Data</strong> after entering patient information.</div>
+
+            <section class="resource-frame-section">
+                <h2>Patient Resource Center</h2>
+                <p>This iframe demonstrates embedded, clickable content created as a separate HTML page.</p>
+                <iframe src="patient-resources.html" title="Metropolitan Medical Clinic patient resources"></iframe>
+            </section>
+        </aside>
+    </main>
+
+    <!-- Fixed/protected footer remains in the viewport, demonstrating content protection separately from the iframe. -->
+    <footer id="footer-div" class="fixed-footer">
+        <span>Metropolitan Medical Clinic &bull; Houston, Texas</span>
+        <a href="mailto:support@metropolitanmedical.example">Contact Us</a>
+        <span id="storageStatus">Local storage ready.</span>
+    </footer>
+
+    <div class="footer-spacer" aria-hidden="true"></div>
+</body>
+<!-- End of homework4.html -->
+</html>

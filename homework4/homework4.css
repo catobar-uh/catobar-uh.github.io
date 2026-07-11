@@ -1,0 +1,221 @@
+/*
+Program name: homework4.css
+Author: Christopher Tobar
+Date created: July 11, 2026
+Date last edited: July 11, 2026
+Version: 4.0
+Description: External CSS for combined Homework 3 and Homework 4 patient registration form.
+*/
+
+:root {
+    --header-height: 128px;
+    --footer-height: 48px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #e9eef3;
+    color: #17212b;
+    margin: 0;
+    padding: 0;
+}
+
+#banner-div {
+    background-color: #ffffff;
+    border-bottom: 3px solid #4e6478;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-height: var(--header-height);
+}
+
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.16);
+}
+
+#clinic-logo {
+    width: 92px;
+    height: 92px;
+    object-fit: contain;
+}
+
+.banner-copy h1 {
+    color: #003b68;
+    margin: 0 0 6px;
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+.banner-copy p { margin: 4px 0; font-weight: bold; }
+
+.new-user-control {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 5px 8px;
+    background: #fff7d6;
+    border: 1px solid #9a7a00;
+}
+
+#main-content {
+    max-width: 1260px;
+    margin: 22px auto;
+    padding: 0 18px;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr);
+    gap: 20px;
+    align-items: start;
+}
+
+#form-section,
+#review-section,
+.thank-you-card {
+    background-color: #ffffff;
+    border: 2px solid #748493;
+    padding: 18px;
+    border-radius: 4px;
+}
+
+#review-section {
+    position: sticky;
+    top: calc(var(--header-height) + 14px);
+    max-height: calc(100vh - var(--header-height) - var(--footer-height) - 38px);
+    overflow-y: auto;
+}
+
+h2, th {
+    color: #003b68;
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+.instructions { color: #334455; line-height: 1.45; }
+.status-message { padding: 8px 10px; border-left: 4px solid #526f88; background: #edf4fa; }
+.success-message { color: #176b34; }
+.error-message { color: #a40000; }
+.valid-message { color: #176b34; font-weight: bold; }
+
+.form-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #748493;
+}
+
+.form-table th {
+    background-color: #dceaf5;
+    text-align: left;
+    padding: 9px;
+    border: 1px solid #748493;
+}
+
+.form-table td {
+    font-size: 15px;
+    padding: 8px;
+    border: 1px solid #c4cbd1;
+    vertical-align: top;
+}
+
+.form-table td:first-child { width: 23%; font-weight: bold; }
+.form-table td:nth-child(2) { width: 47%; }
+.form-table td:nth-child(3) { width: 30%; }
+
+label { margin-right: 12px; }
+.choice-group label { display: inline-block; margin-bottom: 7px; }
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 7px;
+    border: 1px solid #667684;
+    border-radius: 3px;
+    background: #ffffff;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 3px solid rgba(0, 93, 160, 0.2);
+    border-color: #005da0;
+}
+
+.field-message {
+    display: block;
+    min-height: 34px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.25;
+}
+
+button,
+.submit-button,
+.reset-button {
+    color: #ffffff;
+    padding: 9px 14px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    margin: 4px;
+}
+
+button { background-color: #006b45; }
+#validateButton { background-color: #005da0; }
+.validated-button { background-color: #1d7a34 !important; }
+.submit-button { background-color: #8b2f76; }
+.reset-button { background-color: #555f67; }
+button:hover, .submit-button:hover, .reset-button:hover { filter: brightness(0.92); }
+
+.button-row { text-align: center; }
+
+.review-table { width: 100%; border-collapse: collapse; }
+.review-table th, .review-table td { border-bottom: 1px solid #cbd2d8; padding: 7px; text-align: left; vertical-align: top; }
+.review-table th { width: 42%; }
+
+.resource-frame-section { margin-top: 22px; padding-top: 14px; border-top: 2px solid #748493; }
+.resource-frame-section iframe { width: 100%; min-height: 260px; border: 2px solid #748493; background: #ffffff; }
+
+.fixed-footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-height: var(--footer-height);
+    z-index: 1200;
+    background: #163b57;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 10px 16px;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.18);
+    font-size: 14px;
+}
+
+.fixed-footer a, .fixed-footer a:visited { color: #ffffff; font-weight: bold; }
+.footer-spacer { height: 72px; }
+.thank-you-card { max-width: 760px; margin: 50px auto; text-align: center; }
+.thank-you-card a, .thank-you-card a:visited { color: #003b68; }
+
+@media (max-width: 900px) {
+    :root { --header-height: 180px; }
+    #main-content { grid-template-columns: 1fr; }
+    #review-section { position: static; max-height: none; }
+    #banner-div { flex-direction: column; text-align: center; }
+    .fixed-footer { position: static; flex-direction: column; gap: 5px; }
+    .footer-spacer { display: none; }
+}
+
+@media (max-width: 650px) {
+    .form-table, .form-table tbody, .form-table tr, .form-table th, .form-table td { display: block; width: 100% !important; }
+    .form-table tr { margin-bottom: 8px; }
+    .form-table th { text-align: center; }
+}
+
+/* End of homework4.css */
